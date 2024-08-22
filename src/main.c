@@ -2,9 +2,14 @@
 
 int main(void)
 {
-    /* Añade aquí el código de configuración */
+    Pin_ponModoSalida(Pin_LED);
+    Pin_ponEstadoAlto(Pin_LED);
+    Systick_inicializa();
 
-    /* Añade aquí el lazo principal */
 
+    for(;;){
+        Systick_esperaMilisegundos (500);
+        Pin_invierteEstado(Pin_LED);
+    }
     return 0;
 }

@@ -2,18 +2,28 @@
 #include "hal.h"
 
 
-// Función para inicializar el temporizador SysTick
-void HAL_SysTick_Init(uint32_t ticks) {
-    // Configurar el temporizador SysTick para que genere una interrupción cada 'ticks' milisegundos
-    SysTick->LOAD = (ticks * (SystemCoreClock / 1000)) - 1; // Configurar el valor de recarga del contador
-    SysTick->VAL = 0; // Reiniciar el contador
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk; // Habilitar el temporizador
+/* Aquí tu implementación de controlador para el timer SysTick */
+
+static volatile uint32_t ticks;
+
+void Systick_inicializa(void)
+{
+    SystemCoreClockUpdate();
+    SysTick_Config(SystemCoreClock/1000);
 }
 
-// Función de interrupción del temporizador SysTick
-void SysTick_Handler(void) {
-    // Implementa aquí la lógica de la interrupción del temporizador SysTick
-    // Por ejemplo, cambiar el estado del LED, etc.
+uint32_t Systick_obtMilisegundos(void)
+{
+    return ticks;
 }
 
+void Systick_esperaMilisegundos(uint32_t tiempo)
+{
+    const uint32_t inicial = ticks;
+    while(ticks-inicial < tiempo);
+}
 
+void SysTick_Handler(void)
+{
+    ++ticks;
+}

@@ -3,9 +3,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-/* Aquí inclusión de otros encabezados con definiciones necesarias */
-
-/* Aquí tus definiciones de tipo y constantes */
 
 typedef enum HPin{
     Pin_LED,
@@ -23,5 +20,15 @@ void Pin_ponEstadoAlto(HPin pin);
 bool Pin_consultaEstado(HPin pin);
 
 void Pin_invierteEstado(HPin pin);
+
+void Systick_inicializa(void);
+
+uint32_t Systick_obtMilisegundos(void);
+
+void Systick_esperaMilisegundos(uint32_t tiempo);
+
+void SysTick_Handler(void);
+
+
 
 #endif
